@@ -11,8 +11,10 @@
           <p class="card-subtitle mb-2 text-muted">Tags: <%= @image.tags %></p>
         <% end %>
 
-        <%= link_to 'Edit', edit_image_path(@image) , :class => "btn btn-light"%>
-        <%= link_to 'Back', images_path , :class => "btn btn-light"%>
+        <%= link_to 'Edit', edit_image_path(@image), :class => "btn btn-light"%>
+        <%= link_to "Download", download_image_path(@image), "data-turbolinks" => false, :class => "btn btn-light" %>
+
+        <%= link_to 'Back', root_path , :class => "btn btn-light"%>
 
 
       </div>

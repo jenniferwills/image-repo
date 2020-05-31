@@ -20,17 +20,19 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    @image = Image.new(create_params)
+    parameters =create_params
+    parameters[:files].each do |f|
+      tmp = {:title => parameters[:title], :private => parameters[:private], :tags => parameters[:tags], :file => f}
 
-    respond_to do |format|
-      if @image.save
-        format.html { redirect_to root_path, notice: 'Image was successfully created.' }
-        format.json { render :show, status: :created, location: @image }
-      else
+      @image = Image.create!(tmp)
+      if !(@image.save)
         format.html { render :new }
         format.json { render json: @image.errors, status: :unprocessable_entity }
       end
+
+
     end
+    redirect_to root_path, notice: 'Image was successfully created.'
   end
 
   # PATCH/PUT /images/1
@@ -50,12 +52,32 @@ class ImagesController < ApplicationController
   # DELETE /images/1
   # DELETE /images/1.json
   def destroy
+    @image.file.purge
     @image.destroy
     respond_to do |format|
-      format.html { redirect_to images_url, notice: 'Image was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Image was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
+
+  def destroy_all
+    @image.file.purge
+    @image.destroy
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Image was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+
+  def download
+    send_data @resume, type: "application/pdf", disposition: "attachment"
+  end
+
+  def download_all
+    send_data @resume, type: "application/pdf", disposition: "attachment"
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -65,16 +87,14 @@ class ImagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def create_params
-      params.require(:title)
-      params.require(:file)
+      params.require(:files)
+      # byebug
       params.require(:private)
-      params.permit(:title, :tags, :file, :private)
+      params.permit(:title, :tags, :private, files: [])
     end
 
     # Only allow a list of trusted parameters through.
     def update_params
-      params.require(:title)
-      params.require(:private)
       params.permit(:title, :tags, :private)
     end
 

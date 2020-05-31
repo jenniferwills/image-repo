@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'image_processing'
+gem 'active_storage-send_zip'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
