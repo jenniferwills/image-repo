@@ -1,0 +1,22 @@
+<h1>Public Images</h1>
+
+  <div class="card-columns">
+    <% @images.each do |img| %>
+      <div class="card">
+        <div class="card-block">
+          <%= image_tag img.file.variant(resize_to_limit: [100, 100]) %>
+          <p class="card-title"><%= img.title %></p>
+          <% if img.tags %>
+            <p class="card-subtitle mb-2 text-muted">Tags: <%= img.tags %></p>
+          <% end %>
+
+        </div>
+
+      </div>
+
+
+    <% end %>
+
+  </div>
+
+</div>
