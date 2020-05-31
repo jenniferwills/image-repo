@@ -80,10 +80,10 @@ class ImagesController < ApplicationController
   end
 
   def download_all
-    files =  {}
+    files = []
     imgs = Image.all
     imgs.each do |img|
-      files[img.title + img.id.to_s] = img.file
+      files << img.file
     end
     # byebug
 
