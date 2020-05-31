@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  include ActiveStorage::SendZip
+
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
   # GET /images
@@ -61,8 +63,11 @@ class ImagesController < ApplicationController
   end
 
   def destroy_all
-    @image.file.purge
-    @image.destroy
+    imgs = Image.all
+    imgs.each do |img|
+      img.file.purge
+      img.destroy
+    end
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'Image was successfully destroyed.' }
       format.json { head :no_content }
@@ -75,7 +80,16 @@ class ImagesController < ApplicationController
   end
 
   def download_all
-    send_data @resume, type: "application/pdf", disposition: "attachment"
+    files =  {}
+    imgs = Image.all
+    imgs.each do |img|
+      files[img.title + img.id.to_s] = img.file
+    end
+    # byebug
+
+    send_zip files
+    # send_data @resume, type: "application/pdf", disposition: "attachment"
+
   end
 
 
