@@ -12,10 +12,6 @@ class ImagesController < ApplicationController
   def show
   end
 
-  # GET /images/new
-  def new
-    @image = Image.new
-  end
 
   # GET /images/1/edit
   def edit
@@ -24,7 +20,7 @@ class ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
-    @image = Image.new(image_params)
+    @image = Image.new(create_params)
 
     respond_to do |format|
       if @image.save
@@ -41,7 +37,7 @@ class ImagesController < ApplicationController
   # PATCH/PUT /images/1.json
   def update
     respond_to do |format|
-      if @image.update(image_params)
+      if @image.update(update_params)
         format.html { redirect_to @image, notice: 'Image was successfully updated.' }
         format.json { render :show, status: :ok, location: @image }
       else
@@ -68,10 +64,18 @@ class ImagesController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
-    def image_params
+    def create_params
       params.require(:title)
       params.require(:file)
       params.require(:private)
       params.permit(:title, :tags, :file, :private)
     end
+
+    # Only allow a list of trusted parameters through.
+    def update_params
+      params.require(:title)
+      params.require(:private)
+      params.permit(:title, :tags, :private)
+    end
+
 end

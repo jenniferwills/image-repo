@@ -1,4 +1,23 @@
-<p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to 'Back', images_path %>
+<div class="card-columns">
+
+  <div class="card">
+    <div class="card-block" >
+      <%= image_tag @image.file , :width => "100%" %>
+      <div class="card-body">
+        <p class="card-title"><%= @image.title %></p>
+
+        <% if @image.tags %>
+          <p class="card-subtitle mb-2 text-muted">Tags: <%= @image.tags %></p>
+        <% end %>
+
+        <%= link_to 'Edit', edit_image_path(@image) , :class => "btn btn-light"%>
+        <%= link_to 'Back', images_path , :class => "btn btn-light"%>
+
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
