@@ -6,7 +6,8 @@ class ImagesController < ApplicationController
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all
+    @images = Image.all.page params[:page]
+
   end
 
   # GET /images/1
@@ -43,7 +44,7 @@ class ImagesController < ApplicationController
 
     end
     if errors.empty?
-      redirect_to root_path, notice: 'Image was successfully created.'
+      redirect_to action: :index, notice: 'Image was successfully created.', uploaded_success: true
     end
   end
 

@@ -31,6 +31,7 @@ gem 'jquery-rails', '~> 4.4.0'
 gem 'image_processing', '~> 1.11.0'
 gem 'active_storage-send_zip', '~> 0.3.3'
 gem 'active_storage_validations', '~> 0.8.9'
+gem 'kaminari', '~> 1.2.1'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

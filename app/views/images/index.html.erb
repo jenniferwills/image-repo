@@ -1,4 +1,11 @@
 
+<% if params[:uploaded_success] %>
+  <div class="alert alert-success" role="alert">
+    Files Uploaded Successfully!
+  </div>
+<% end %>
+<%= paginate @images %>
+
 <div class="card-columns">
   <% @images.each do |img| %>
     <div class="card">
