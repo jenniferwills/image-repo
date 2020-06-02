@@ -1,33 +1,34 @@
+<div class="container-fluid">
+  <% if params[:uploaded_success] %>
+    <div class="alert alert-success" role="alert">
+      Files Uploaded Successfully!
+    </div>
+  <% end %>
 
-<% if params[:uploaded_success] %>
-  <div class="alert alert-success" role="alert">
-    Files Uploaded Successfully!
-  </div>
-<% end %>
-<%= paginate @images %>
+  <%= paginate @images %>
 
-<div class="card-columns">
-  <% @images.each do |img| %>
-    <div class="card">
-      <div class="card-block" >
-        <%= image_tag img.file , :width => "100%" %>
-        <div class="card-body">
-          <p class="card-title"><%= img.title %></p>
+  <div class="card-columns">
+    <% @images.each do |img| %>
+      <div class="card">
+        <div class="card-block" >
+          <%= image_tag img.file , :width => "100%" %>
+          <div class="card-body">
+            <p class="card-title"><%= img.title %></p>
 
-          <% if img.tags %>
-            <p class="card-subtitle mb-2 text-muted">Tags: <%= img.tags %></p>
-          <% end %>
+            <% unless img.tags.empty? %>
+              <p class="card-subtitle mb-2 text-muted">Tags: <%= img.tags %></p>
+            <% end %>
 
-            <%= link_to "View", image_path(img), :class => "btn btn-light" %>
+              <%= link_to "View", image_path(img), :class => "btn btn-light" %>
+
+          </div>
 
         </div>
 
       </div>
 
-    </div>
 
-
-  <% end %>
+    <% end %>
 
   </div>
 

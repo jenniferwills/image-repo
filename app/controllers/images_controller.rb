@@ -31,13 +31,10 @@ class ImagesController < ApplicationController
     errors = []
     parameters[:files].each do |f|
       tmp = {:title => parameters[:title], :private => parameters[:private], :tags => parameters[:tags], :file => f}
-      # byebug
 
       @image = Image.create(tmp)
-      # byebug
 
       if !(@image.save)
-        # byebug
         render action: :upload
       end
 
@@ -51,8 +48,10 @@ class ImagesController < ApplicationController
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update
+
     respond_to do |format|
-      if @image.update(update_params)
+
+      if @image.update(update_params[:image])
         format.html { redirect_to @image, notice: 'Image was successfully updated.' }
         format.json { render :show, status: :ok, location: @image }
       else
@@ -81,18 +80,12 @@ class ImagesController < ApplicationController
     end
   end
 
-
-  def download
-    send_data @resume, type: "application/pdf", disposition: "attachment"
-  end
-
   def download_all
     files = []
     imgs = Image.all
     imgs.each do |img|
       files << img.file
     end
-    # byebug
 
     send_zip files
     # send_data @resume, type: "application/pdf", disposition: "attachment"
@@ -109,14 +102,13 @@ class ImagesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def create_params
       params.require(:files)
-      # byebug
-      params.require(:private)
-      params.permit(:title, :tags, :private, files: [])
+      params.permit(:title, :tags, files: [])
     end
 
     # Only allow a list of trusted parameters through.
     def update_params
-      params.permit(:title, :tags, :private)
+      params.require(:image)
+      params.permit(:image => [:title, :tags])
     end
 
 end

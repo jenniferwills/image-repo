@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post 'images/download_all'
   root to: 'images#index'
   resources :images do
-    get :download, on: :member
+    post :update, on: :member
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
