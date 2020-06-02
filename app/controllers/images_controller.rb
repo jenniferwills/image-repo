@@ -14,6 +14,10 @@ class ImagesController < ApplicationController
   def show
   end
 
+  def upload
+    @image = Image.new
+
+  end
 
   # GET /images/1/edit
   def edit
@@ -23,18 +27,24 @@ class ImagesController < ApplicationController
   # POST /images.json
   def create
     parameters =create_params
+    errors = []
     parameters[:files].each do |f|
       tmp = {:title => parameters[:title], :private => parameters[:private], :tags => parameters[:tags], :file => f}
+      # byebug
 
-      @image = Image.create!(tmp)
+      @image = Image.create(tmp)
+      # byebug
+
       if !(@image.save)
-        format.html { render :new }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
+        # byebug
+        render action: :upload
       end
 
 
     end
-    redirect_to root_path, notice: 'Image was successfully created.'
+    if errors.empty?
+      redirect_to root_path, notice: 'Image was successfully created.'
+    end
   end
 
   # PATCH/PUT /images/1
@@ -63,11 +73,7 @@ class ImagesController < ApplicationController
   end
 
   def destroy_all
-    imgs = Image.all
-    imgs.each do |img|
-      img.file.purge
-      img.destroy
-    end
+    Image.destroy_all
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'Image was successfully destroyed.' }
       format.json { head :no_content }

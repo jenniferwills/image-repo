@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'site/upload'
+  # get 'site/upload'
   get 'images/upload'
   post 'images/create'
   delete 'images/destroy_all'
