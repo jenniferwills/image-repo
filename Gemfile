@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails', '~> 4.4.0'
-gem 'image_processing', '~> 1.11.0'
+gem 'image_processing', '~> 1.12.2'
 gem 'active_storage-send_zip', '~> 0.3.3'
 gem 'active_storage_validations', '~> 0.8.9'
 gem 'kaminari', '~> 1.2.1'
